@@ -97,4 +97,10 @@ const (
 
 	// ServiceInstanceListKind is the name of a list of service instance resources
 	ServiceInstanceListKind Kind = "InstanceList"
+
+	// PodPresetKind is the name of a PodPreset resource, a Kubernetes third party resource.
+	PodPresetKind Kind = "PodPreset"
+
+	// PodPresetListKind is the name of a list of PodPreset resources
+	PodPresetListKind Kind = "PodPresetList"
 )

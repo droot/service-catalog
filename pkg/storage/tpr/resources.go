@@ -56,6 +56,12 @@ var ServiceClassResource = metav1.APIResource{
 	Namespaced: true,
 }
 
+// PodPresetResource represents the API resource for the PodPreset third party resource
+var PodPresetResource = metav1.APIResource{
+	Name:       PodPresetKind.TPRName(),
+	Namespaced: true,
+}
+
 // ServiceInstanceResource represents the API resource for the service instance third
 // party resource
 var serviceInstanceTPR = v1beta1.ThirdPartyResource{
@@ -112,6 +118,20 @@ var serviceClassTPR = v1beta1.ThirdPartyResource{
 	// it here
 	ObjectMeta: metav1.ObjectMeta{
 		Name: withGroupName(ServiceClassKind.TPRName()),
+	},
+	Versions: []v1beta1.APIVersion{
+		{Name: tprVersion},
+	},
+}
+
+// podPresetTPR represents the API resource for the podpreset third party resource
+var podPresetTPR = v1beta1.ThirdPartyResource{
+	TypeMeta: metav1.TypeMeta{
+		Kind:       tprKind,
+		APIVersion: tprVersion,
+	},
+	ObjectMeta: metav1.ObjectMeta{
+		Name: withGroupName(PodPresetKind.TPRName()),
 	},
 	Versions: []v1beta1.APIVersion{
 		{Name: tprVersion},

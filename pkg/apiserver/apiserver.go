@@ -18,6 +18,7 @@ package apiserver
 
 import (
 	servicecatalogv1alpha1 "github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog/v1alpha1"
+	settingsv1alpha1 "github.com/kubernetes-incubator/service-catalog/pkg/apis/settings/v1alpha1"
 	genericapiserver "k8s.io/apiserver/pkg/server"
 	serverstorage "k8s.io/apiserver/pkg/server/storage"
 )
@@ -38,6 +39,7 @@ func DefaultAPIResourceConfigSource() *serverstorage.ResourceConfig {
 	ret := serverstorage.NewResourceConfig()
 	ret.EnableVersions(
 		servicecatalogv1alpha1.SchemeGroupVersion,
+		settingsv1alpha1.SchemeGroupVersion,
 	)
 
 	return ret

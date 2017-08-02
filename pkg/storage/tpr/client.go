@@ -40,6 +40,8 @@ func GetResourceClient(cl *dynamic.Client, kind Kind, namespace string) (*dynami
 		return cl.Resource(&ServiceBrokerResource, namespace), nil
 	case ServiceClassKind, ServiceClassListKind:
 		return cl.Resource(&ServiceClassResource, namespace), nil
+	case PodPresetKind, PodPresetListKind:
+		return cl.Resource(&PodPresetResource, namespace), nil
 	default:
 		return nil, errUnsupportedResource{kind: kind}
 	}

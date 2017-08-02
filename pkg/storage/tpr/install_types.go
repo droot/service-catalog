@@ -36,6 +36,7 @@ var thirdPartyResources = []v1beta1.ThirdPartyResource{
 	serviceClassTPR,
 	serviceInstanceTPR,
 	serviceBindingTPR,
+	podPresetTPR,
 }
 
 // ErrTPRInstall is returned when we fail to install TPR
