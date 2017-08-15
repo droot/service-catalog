@@ -1007,7 +1007,7 @@ func GetOpenAPIDefinitions(ref openapi.ReferenceCallback) map[string]openapi.Ope
 								Items: &spec.SchemaOrArray{
 									Schema: &spec.Schema{
 										SchemaProps: spec.SchemaProps{
-											Ref: ref("k8s.io/kubernetes/pkg/api.EnvVar"),
+											Ref: ref("k8s.io/client-go/pkg/api/v1.EnvVar"),
 										},
 									},
 								},
@@ -1020,7 +1020,7 @@ func GetOpenAPIDefinitions(ref openapi.ReferenceCallback) map[string]openapi.Ope
 								Items: &spec.SchemaOrArray{
 									Schema: &spec.Schema{
 										SchemaProps: spec.SchemaProps{
-											Ref: ref("k8s.io/kubernetes/pkg/api.EnvFromSource"),
+											Ref: ref("k8s.io/client-go/pkg/api/v1.EnvFromSource"),
 										},
 									},
 								},
@@ -1033,7 +1033,7 @@ func GetOpenAPIDefinitions(ref openapi.ReferenceCallback) map[string]openapi.Ope
 								Items: &spec.SchemaOrArray{
 									Schema: &spec.Schema{
 										SchemaProps: spec.SchemaProps{
-											Ref: ref("k8s.io/kubernetes/pkg/api.Volume"),
+											Ref: ref("k8s.io/client-go/pkg/api/v1.Volume"),
 										},
 									},
 								},
@@ -1046,7 +1046,7 @@ func GetOpenAPIDefinitions(ref openapi.ReferenceCallback) map[string]openapi.Ope
 								Items: &spec.SchemaOrArray{
 									Schema: &spec.Schema{
 										SchemaProps: spec.SchemaProps{
-											Ref: ref("k8s.io/kubernetes/pkg/api.VolumeMount"),
+											Ref: ref("k8s.io/client-go/pkg/api/v1.VolumeMount"),
 										},
 									},
 								},
@@ -1057,7 +1057,7 @@ func GetOpenAPIDefinitions(ref openapi.ReferenceCallback) map[string]openapi.Ope
 				},
 			},
 			Dependencies: []string{
-				"k8s.io/apimachinery/pkg/apis/meta/v1.LabelSelector", "k8s.io/kubernetes/pkg/api.EnvFromSource", "k8s.io/kubernetes/pkg/api.EnvVar", "k8s.io/kubernetes/pkg/api.Volume", "k8s.io/kubernetes/pkg/api.VolumeMount"},
+				"k8s.io/apimachinery/pkg/apis/meta/v1.LabelSelector", "k8s.io/client-go/pkg/api/v1.EnvFromSource", "k8s.io/client-go/pkg/api/v1.EnvVar", "k8s.io/client-go/pkg/api/v1.Volume", "k8s.io/client-go/pkg/api/v1.VolumeMount"},
 		},
 		"k8s.io/apimachinery/pkg/apis/meta/v1.APIGroup": {
 			Schema: spec.Schema{

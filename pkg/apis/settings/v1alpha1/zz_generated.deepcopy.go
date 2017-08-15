@@ -24,7 +24,7 @@ import (
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	conversion "k8s.io/apimachinery/pkg/conversion"
 	runtime "k8s.io/apimachinery/pkg/runtime"
-	api "k8s.io/kubernetes/pkg/api"
+	api_v1 "k8s.io/client-go/pkg/api/v1"
 	reflect "reflect"
 )
 
@@ -92,40 +92,40 @@ func DeepCopy_v1alpha1_PodPresetSpec(in interface{}, out interface{}, c *convers
 		}
 		if in.Env != nil {
 			in, out := &in.Env, &out.Env
-			*out = make([]api.EnvVar, len(*in))
+			*out = make([]api_v1.EnvVar, len(*in))
 			for i := range *in {
 				if newVal, err := c.DeepCopy(&(*in)[i]); err != nil {
 					return err
 				} else {
-					(*out)[i] = *newVal.(*api.EnvVar)
+					(*out)[i] = *newVal.(*api_v1.EnvVar)
 				}
 			}
 		}
 		if in.EnvFrom != nil {
 			in, out := &in.EnvFrom, &out.EnvFrom
-			*out = make([]api.EnvFromSource, len(*in))
+			*out = make([]api_v1.EnvFromSource, len(*in))
 			for i := range *in {
 				if newVal, err := c.DeepCopy(&(*in)[i]); err != nil {
 					return err
 				} else {
-					(*out)[i] = *newVal.(*api.EnvFromSource)
+					(*out)[i] = *newVal.(*api_v1.EnvFromSource)
 				}
 			}
 		}
 		if in.Volumes != nil {
 			in, out := &in.Volumes, &out.Volumes
-			*out = make([]api.Volume, len(*in))
+			*out = make([]api_v1.Volume, len(*in))
 			for i := range *in {
 				if newVal, err := c.DeepCopy(&(*in)[i]); err != nil {
 					return err
 				} else {
-					(*out)[i] = *newVal.(*api.Volume)
+					(*out)[i] = *newVal.(*api_v1.Volume)
 				}
 			}
 		}
 		if in.VolumeMounts != nil {
 			in, out := &in.VolumeMounts, &out.VolumeMounts
-			*out = make([]api.VolumeMount, len(*in))
+			*out = make([]api_v1.VolumeMount, len(*in))
 			copy(*out, *in)
 		}
 		return nil

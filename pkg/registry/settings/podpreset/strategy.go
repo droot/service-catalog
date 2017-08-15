@@ -28,7 +28,7 @@ import (
 	"k8s.io/apiserver/pkg/registry/rest"
 	apistorage "k8s.io/apiserver/pkg/storage"
 	"k8s.io/apiserver/pkg/storage/names"
-	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/client-go/pkg/api"
 
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/settings"
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/settings/validation"

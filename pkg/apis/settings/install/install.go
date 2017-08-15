@@ -22,7 +22,7 @@ import (
 	"k8s.io/apimachinery/pkg/apimachinery/announced"
 	"k8s.io/apimachinery/pkg/apimachinery/registered"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/client-go/pkg/api"
 
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/settings"
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/settings/v1alpha1"

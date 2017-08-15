@@ -21,7 +21,7 @@ import (
 	"testing"
 
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/client-go/pkg/api"
 
 	"github.com/kubernetes-incubator/service-catalog/pkg/apis/settings"
 )

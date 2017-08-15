@@ -189,11 +189,15 @@ $(BINDIR)/e2e.test: .init
 	# generate all pkg/client contents
 	$(DOCKER_CMD) $(BUILD_DIR)/update-client-gen.sh
 	# generate openapi
-	# $(DOCKER_CMD) $(BINDIR)/openapi-gen \
-	# 	--v 1 --logtostderr \
-	# 	--go-header-file "vendor/github.com/kubernetes/repo-infra/verify/boilerplate/boilerplate.go.txt" \
-	# 	--input-dirs "github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog/v1alpha1,k8s.io/client-go/pkg/api/v1,k8s.io/apimachinery/pkg/apis/meta/v1" \
-	# 	--output-package "github.com/kubernetes-incubator/service-catalog/pkg/openapi"
+	$(DOCKER_CMD) $(BINDIR)/openapi-gen \
+		--v 1 --logtostderr \
+		--go-header-file "vendor/github.com/kubernetes/repo-infra/verify/boilerplate/boilerplate.go.txt" \
+		--input-dirs "github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog/v1alpha1" \
+		--input-dirs "github.com/kubernetes-incubator/service-catalog/pkg/apis/settings/v1alpha1" \
+		--input-dirs "k8s.io/client-go/pkg/api/v1" \
+		--input-dirs "k8s.io/client-go/pkg/api" \
+		--input-dirs "k8s.io/apimachinery/pkg/apis/meta/v1" \
+		--output-package "github.com/kubernetes-incubator/service-catalog/pkg/openapi"
 	# Generate defaults
 	$(DOCKER_CMD) $(BINDIR)/defaulter-gen \
 		--v 1 --logtostderr \
@@ -220,15 +224,6 @@ $(BINDIR)/e2e.test: .init
 		--output-file-base zz_generated.conversion
 	# generate all pkg/client contents
 	$(DOCKER_CMD) $(BUILD_DIR)/update-client-gen.sh
-	# generate openapi
-	$(DOCKER_CMD) $(BINDIR)/openapi-gen \
-		--v 1 --logtostderr \
-		--go-header-file "vendor/github.com/kubernetes/repo-infra/verify/boilerplate/boilerplate.go.txt" \
-		--input-dirs "github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog/v1alpha1" \
-		--input-dirs "github.com/kubernetes-incubator/service-catalog/pkg/apis/settings/v1alpha1" \
-		--input-dirs "k8s.io/client-go/pkg/api/v1" \
-		--input-dirs "k8s.io/apimachinery/pkg/apis/meta/v1" \
-		--output-package "github.com/kubernetes-incubator/service-catalog/pkg/openapi"
 	# generate codec
 	$(DOCKER_CMD) $(BUILD_DIR)/update-codecgen.sh
 	touch $@

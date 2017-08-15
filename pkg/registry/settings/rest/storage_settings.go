@@ -29,8 +29,8 @@ import (
 	genericapiserver "k8s.io/apiserver/pkg/server"
 	serverstorage "k8s.io/apiserver/pkg/server/storage"
 	"k8s.io/apiserver/pkg/storage"
+	"k8s.io/client-go/pkg/api"
 	restclient "k8s.io/client-go/rest"
-	"k8s.io/kubernetes/pkg/api"
 )
 
 // StorageProvider provides a factory method to create a new APIGroupInfo for
@@ -48,14 +48,21 @@ func (p StorageProvider) NewRESTStorage(
 	restOptionsGetter generic.RESTOptionsGetter,
 ) (*genericapiserver.APIGroupInfo, error) {
 
+	storage, err := p.v1alpha1Storage(apiResourceConfigSource, restOptionsGetter)
+	if err != nil {
+		return nil, err
+	}
+
 	apiGroupInfo := genericapiserver.NewDefaultAPIGroupInfo(settings.GroupName, api.Registry, server.Scheme, server.ParameterCodec, server.Codecs)
 
 	if apiResourceConfigSource.AnyResourcesForVersionEnabled(settingsapiv1alpha1.SchemeGroupVersion) {
-		apiGroupInfo.VersionedResourcesStorageMap[settingsapiv1alpha1.SchemeGroupVersion.Version] = p.v1alpha1Storage(apiResourceConfigSource, restOptionsGetter)
+		apiGroupInfo.VersionedResourcesStorageMap = map[string]map[string]rest.Storage{
+			settingsapiv1alpha1.SchemeGroupVersion.Version: storage,
+		}
 		apiGroupInfo.GroupMeta.GroupVersion = settingsapiv1alpha1.SchemeGroupVersion
 	}
 
-	return &apiGroupInfo, error
+	return &apiGroupInfo, nil
 }
 
 func (p StorageProvider) v1alpha1Storage(
@@ -101,13 +108,16 @@ func (p StorageProvider) v1alpha1Storage(
 
 	storage := map[string]rest.Storage{}
 	if apiResourceConfigSource.ResourceEnabled(version.WithResource("podpresets")) {
-		podPresetStorage := podpreset.NewStorage(*podPresetOpts)
+		podPresetStorage, _, err := podpreset.NewStorage(*podPresetOpts)
+		if err != nil {
+			return nil, err
+		}
 		storage["podpresets"] = podPresetStorage
 	}
-	return storage
+	return storage, nil
 }
 
 // GroupName returns the API group name.
-func (p RESTStorageProvider) GroupName() string {
+func (p StorageProvider) GroupName() string {
 	return settings.GroupName
 }

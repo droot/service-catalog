@@ -24,7 +24,7 @@ import (
 	settings "github.com/kubernetes-incubator/service-catalog/pkg/apis/settings"
 	conversion "k8s.io/apimachinery/pkg/conversion"
 	runtime "k8s.io/apimachinery/pkg/runtime"
-	api "k8s.io/kubernetes/pkg/api"
+	v1 "k8s.io/client-go/pkg/api/v1"
 	unsafe "unsafe"
 )
 
@@ -99,10 +99,10 @@ func Convert_settings_PodPresetList_To_v1alpha1_PodPresetList(in *settings.PodPr
 
 func autoConvert_v1alpha1_PodPresetSpec_To_settings_PodPresetSpec(in *PodPresetSpec, out *settings.PodPresetSpec, s conversion.Scope) error {
 	out.Selector = in.Selector
-	out.Env = *(*[]api.EnvVar)(unsafe.Pointer(&in.Env))
-	out.EnvFrom = *(*[]api.EnvFromSource)(unsafe.Pointer(&in.EnvFrom))
-	out.Volumes = *(*[]api.Volume)(unsafe.Pointer(&in.Volumes))
-	out.VolumeMounts = *(*[]api.VolumeMount)(unsafe.Pointer(&in.VolumeMounts))
+	out.Env = *(*[]v1.EnvVar)(unsafe.Pointer(&in.Env))
+	out.EnvFrom = *(*[]v1.EnvFromSource)(unsafe.Pointer(&in.EnvFrom))
+	out.Volumes = *(*[]v1.Volume)(unsafe.Pointer(&in.Volumes))
+	out.VolumeMounts = *(*[]v1.VolumeMount)(unsafe.Pointer(&in.VolumeMounts))
 	return nil
 }
 
@@ -113,26 +113,10 @@ func Convert_v1alpha1_PodPresetSpec_To_settings_PodPresetSpec(in *PodPresetSpec,
 
 func autoConvert_settings_PodPresetSpec_To_v1alpha1_PodPresetSpec(in *settings.PodPresetSpec, out *PodPresetSpec, s conversion.Scope) error {
 	out.Selector = in.Selector
-	if in.Env == nil {
-		out.Env = make([]api.EnvVar, 0)
-	} else {
-		out.Env = *(*[]api.EnvVar)(unsafe.Pointer(&in.Env))
-	}
-	if in.EnvFrom == nil {
-		out.EnvFrom = make([]api.EnvFromSource, 0)
-	} else {
-		out.EnvFrom = *(*[]api.EnvFromSource)(unsafe.Pointer(&in.EnvFrom))
-	}
-	if in.Volumes == nil {
-		out.Volumes = make([]api.Volume, 0)
-	} else {
-		out.Volumes = *(*[]api.Volume)(unsafe.Pointer(&in.Volumes))
-	}
-	if in.VolumeMounts == nil {
-		out.VolumeMounts = make([]api.VolumeMount, 0)
-	} else {
-		out.VolumeMounts = *(*[]api.VolumeMount)(unsafe.Pointer(&in.VolumeMounts))
-	}
+	out.Env = *(*[]v1.EnvVar)(unsafe.Pointer(&in.Env))
+	out.EnvFrom = *(*[]v1.EnvFromSource)(unsafe.Pointer(&in.EnvFrom))
+	out.Volumes = *(*[]v1.Volume)(unsafe.Pointer(&in.Volumes))
+	out.VolumeMounts = *(*[]v1.VolumeMount)(unsafe.Pointer(&in.VolumeMounts))
 	return nil
 }
 

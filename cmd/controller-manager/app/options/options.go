@@ -69,6 +69,7 @@ func NewControllerManagerServer() *ControllerManagerServer {
 			ConcurrentSyncs:              defaultConcurrentSyncs,
 			LeaderElection:               leaderelection.DefaultLeaderElectionConfiguration(),
 			LeaderElectionNamespace:      defaultLeaderElectionNamespace,
+			EnablePodPreset:              false,
 			EnableProfiling:              true,
 			EnableContentionProfiling:    false,
 		},
@@ -92,6 +93,7 @@ func (s *ControllerManagerServer) AddFlags(fs *pflag.FlagSet) {
 	fs.BoolVar(&s.OSBAPIContextProfile, "enable-osb-api-context-profile", s.OSBAPIContextProfile, "This does nothing.")
 	fs.MarkHidden("enable-osb-api-context-profile")
 	fs.StringVar(&s.OSBAPIPreferredVersion, "osb-api-preferred-version", s.OSBAPIPreferredVersion, "The string to send as the version header.")
+	fs.BoolVar(&s.EnablePodPreset, "enable-podpreset", s.EnablePodPreset, "Enable PodPreset admission controller")
 	fs.BoolVar(&s.EnableProfiling, "profiling", s.EnableProfiling, "Enable profiling via web interface host:port/debug/pprof/")
 	fs.BoolVar(&s.EnableContentionProfiling, "contention-profiling", s.EnableContentionProfiling, "Enable lock contention profiling, if profiling is enabled")
 	leaderelection.BindFlags(&s.LeaderElection, fs)

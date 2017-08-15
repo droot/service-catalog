@@ -18,7 +18,7 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/kubernetes/pkg/api"
+	v1 "k8s.io/client-go/pkg/api/v1"
 )
 
 // +genclient=true
@@ -32,7 +32,7 @@ type PodPreset struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	// +optional
-	Spec PodPresetSpec `json:"spec"`
+	Spec PodPresetSpec `json:"spec,omitempty"`
 }
 
 // PodPresetSpec is a description of a pod preset.
@@ -40,18 +40,22 @@ type PodPresetSpec struct {
 	// Selector is a label query over a set of resources, in this case pods.
 	// Required.
 	Selector metav1.LabelSelector `json:"selector"`
+
 	// Env defines the collection of EnvVar to inject into containers.
 	// +optional
-	Env []api.EnvVar `json:"env"`
+	Env []v1.EnvVar `json:"env,omitempty"`
+
 	// EnvFrom defines the collection of EnvFromSource to inject into containers.
 	// +optional
-	EnvFrom []api.EnvFromSource `json:"envFrom"`
+	EnvFrom []v1.EnvFromSource `json:"envFrom,omitempty"`
+
 	// Volumes defines the collection of Volume to inject into the pod.
 	// +optional
-	Volumes []api.Volume `json:"volumes"`
+	Volumes []v1.Volume `json:"volumes,omitempty"`
+
 	// VolumeMounts defines the collection of VolumeMount to inject into containers.
 	// +optional
-	VolumeMounts []api.VolumeMount `json:"volumeMounts"`
+	VolumeMounts []v1.VolumeMount `json:"volumeMounts,omitempty"`
 }
 
 // PodPresetList is a list of PodPreset objects.

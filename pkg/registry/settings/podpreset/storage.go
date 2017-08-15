@@ -18,19 +18,14 @@ package podpreset
 
 import (
 	"errors"
-	"fmt"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/fields"
-	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apiserver/pkg/registry/generic"
 	genericregistry "k8s.io/apiserver/pkg/registry/generic/registry"
 	"k8s.io/apiserver/pkg/registry/rest"
 	"k8s.io/apiserver/pkg/storage"
 	"k8s.io/client-go/pkg/api"
-	"k8s.io/kubernetes/pkg/api"
-	"k8s.io/kubernetes/pkg/registry/cachesize"
+	// "k8s.io/kubernetes/pkg/registry/cachesize"
 
 	scmeta "github.com/kubernetes-incubator/service-catalog/pkg/api/meta"
 	settingsapi "github.com/kubernetes-incubator/service-catalog/pkg/apis/settings"
@@ -47,7 +42,7 @@ var (
 func NewSingular(ns, name string) runtime.Object {
 	return &settingsapi.PodPreset{
 		TypeMeta: metav1.TypeMeta{
-			Kind: tpr.PodPreset.String(),
+			Kind: tpr.PodPresetKind.String(),
 		},
 		ObjectMeta: metav1.ObjectMeta{
 			Namespace: ns,
@@ -80,31 +75,6 @@ func CheckObject(obj runtime.Object) error {
 	return nil
 }
 
-// Match determines whether an PodPreset matches a field and label
-// selector.
-func Match(label labels.Selector, field fields.Selector) storage.SelectionPredicate {
-	return storage.SelectionPredicate{
-		Label:    label,
-		Field:    field,
-		GetAttrs: GetAttrs,
-	}
-}
-
-// toSelectableFields returns a field set that represents the object for matching purposes.
-func toSelectableFields(podpreset *settingsapi.PodPreset) fields.Set {
-	objectMetaFieldsSet := generic.ObjectMetaFieldsSet(&podpreset.ObjectMeta, true)
-	return generic.MergeFieldsSets(objectMetaFieldsSet, nil)
-}
-
-// GetAttrs returns labels and fields of a given object for filtering purposes.
-func GetAttrs(obj runtime.Object) (labels.Set, fields.Set, bool, error) {
-	podpreset, ok := obj.(*settingsapi.PodPreset)
-	if !ok {
-		return nil, nil, false, fmt.Errorf("given object is not an Instance")
-	}
-	return labels.Set(podpreset.ObjectMeta.Labels), toSelectableFields(podpreset), podpreset.Initializers != nil, nil
-}
-
 // NewStorage creates a new rest.Storage responsible for accessing Instance
 // resources
 func NewStorage(opts server.Options) (rest.Storage, rest.Storage, error) {
@@ -120,18 +90,18 @@ func NewStorage(opts server.Options) (rest.Storage, rest.Storage, error) {
 		storage.NoTriggerPublisher,
 	)
 
-	store := &genericregistry.Store{
+	store := genericregistry.Store{
 		NewFunc:     EmptyObject,
 		NewListFunc: NewList,
 		KeyRootFunc: opts.KeyRootFunc(),
-		KeyFun:      opts.KeyFunc(true),
+		KeyFunc:     opts.KeyFunc(true),
 		ObjectNameFunc: func(obj runtime.Object) (string, error) {
 			return scmeta.GetAccessor().Name(obj)
 		},
-		PredicateFunc:     podpreset.Matcher,
+		PredicateFunc:     Matcher,
 		Copier:            api.Scheme,
 		QualifiedResource: settingsapi.Resource("podpresets"),
-		WatchCacheSize:    cachesize.GetWatchCacheSizeByResource("podpresets"),
+		// WatchCacheSize:    cachesize.GetWatchCacheSizeByResource("podpresets"),
 
 		CreateStrategy:          podPresetRESTStrategy,
 		UpdateStrategy:          podPresetRESTStrategy,

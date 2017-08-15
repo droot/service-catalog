@@ -18,7 +18,7 @@ package settings
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/client-go/pkg/api/v1"
 )
 
 // +genclient=true
@@ -41,16 +41,16 @@ type PodPresetSpec struct {
 	Selector metav1.LabelSelector
 	// Env defines the collection of EnvVar to inject into containers.
 	// +optional
-	Env []api.EnvVar
+	Env []v1.EnvVar
 	// EnvFrom defines the collection of EnvFromSource to inject into containers.
 	// +optional
-	EnvFrom []api.EnvFromSource
+	EnvFrom []v1.EnvFromSource
 	// Volumes defines the collection of Volume to inject into the pod.
 	// +optional
-	Volumes []api.Volume
+	Volumes []v1.Volume
 	// VolumeMounts defines the collection of VolumeMount to inject into containers.
 	// +optional
-	VolumeMounts []api.VolumeMount
+	VolumeMounts []v1.VolumeMount
 }
 
 // PodPresetList is a list of PodPreset objects.

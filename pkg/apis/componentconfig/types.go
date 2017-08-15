@@ -87,6 +87,10 @@ type ControllerManagerConfiguration struct {
 	// lock.
 	LeaderElectionNamespace string
 
+	// EnablePodPreset enables PodPreset Admission Controller which implements
+	// PodPreset initializer.
+	EnablePodPreset bool
+
 	// enableProfiling enables profiling via web interface host:port/debug/pprof/
 	EnableProfiling bool
 
