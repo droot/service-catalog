@@ -194,9 +194,8 @@ $(BINDIR)/e2e.test: .init
 		--go-header-file "vendor/github.com/kubernetes/repo-infra/verify/boilerplate/boilerplate.go.txt" \
 		--input-dirs "github.com/kubernetes-incubator/service-catalog/pkg/apis/servicecatalog/v1alpha1" \
 		--input-dirs "github.com/kubernetes-incubator/service-catalog/pkg/apis/settings/v1alpha1" \
-		--input-dirs "k8s.io/client-go/pkg/api/v1" \
-		--input-dirs "k8s.io/client-go/pkg/api" \
 		--input-dirs "k8s.io/apimachinery/pkg/apis/meta/v1" \
+		--input-dirs "k8s.io/api/core/v1" \
 		--output-package "github.com/kubernetes-incubator/service-catalog/pkg/openapi"
 	# Generate defaults
 	$(DOCKER_CMD) $(BINDIR)/defaulter-gen \

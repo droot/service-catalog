@@ -85,7 +85,10 @@ the core control loops shipped with the service catalog.`,
 const controllerManagerAgentName = "service-catalog-controller-manager"
 const controllerDiscoveryAgentName = "service-catalog-controller-discovery"
 
-var catalogGVR = schema.GroupVersionResource{Group: "servicecatalog.k8s.io", Version: "v1alpha1", Resource: "brokers"}
+var (
+	catalogGVR   = schema.GroupVersionResource{Group: "servicecatalog.k8s.io", Version: "v1alpha1", Resource: "brokers"}
+	podPresetGVR = schema.GroupVersionResource{Group: "settings.k8s.io", Version: "v1alpha1", Resource: "podpresets"}
+)
 
 // Run runs the service-catalog controller-manager; should never exit.
 func Run(controllerManagerOptions *options.ControllerManagerServer) error {
@@ -348,6 +351,22 @@ func StartControllers(s *options.ControllerManagerServer,
 		informerFactory.Start(stop)
 	} else {
 		return fmt.Errorf("unable to start service-catalog controller: servicecatalog/v1alpha1 is not available")
+	}
+
+	if availableResources[podPresetGVR] {
+		// if PodPreset API is enabled, launch PodPreset admission control
+		// initializer
+		glog.Infof("PodPreset APIs are enabled, starting initializer for PodPresets")
+		podPresetInitializer, err := controller.NewPodPresetInitializer(
+			coreClient,
+			serviceCatalogClientBuilder.ClientOrDie(controllerManagerAgentName).SettingsV1alpha1(),
+			recorder,
+		)
+		if err != nil {
+			glog.Errorf("error creating podpreset initializer : %v", err)
+			return err
+		}
+		go podPresetInitializer.Run(stop)
 	}
 
 	select {}

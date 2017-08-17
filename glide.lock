@@ -1,5 +1,5 @@
-hash: e872ffba1b42ff4d0b77dc5af5bbe6fadc77647e1edbfa9a7fde7699459cf139
-updated: 2017-07-21T13:58:14.204655699+10:00
+hash: 8b2079956b196c6d719432e5fc512bf63acd74a681c196df95041bfed5684c50
+updated: 2017-08-16T15:44:24.940601754-07:00
 imports:
 - name: bitbucket.org/ww/goautoneg
   version: 75cd24fc2f2c2a2088577d12123ddee5f54e0675
@@ -351,6 +351,10 @@ imports:
   version: 20b71e5b60d756d3d2f80def009790325acc2b23
 - name: gopkg.in/yaml.v2
   version: 53feefa2559fb8dfa8d81baad31be332c97d6c77
+- name: k8s.io/api
+  version: 4fe9229aaa9d704f8a2a21cdcd50de2bbb6e1b57
+  subpackages:
+  - core/v1
 - name: k8s.io/apimachinery
   version: abe34e4f5b4413c282a83011892cbeea5b32223b
   subpackages:

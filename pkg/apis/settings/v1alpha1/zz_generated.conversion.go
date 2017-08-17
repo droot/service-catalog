@@ -22,9 +22,9 @@ package v1alpha1
 
 import (
 	settings "github.com/kubernetes-incubator/service-catalog/pkg/apis/settings"
+	v1 "k8s.io/api/core/v1"
 	conversion "k8s.io/apimachinery/pkg/conversion"
 	runtime "k8s.io/apimachinery/pkg/runtime"
-	v1 "k8s.io/client-go/pkg/api/v1"
 	unsafe "unsafe"
 )
 
